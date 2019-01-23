@@ -72,7 +72,7 @@ client.on('message', async (msg) => {
             const jsonMsg = await JSON.parse(packet.message);
 
             console.log(jsonMsg);
-            console.log(jsonMsg.extra[0].text.substring(0, 1) === String(cnt) + '.');
+            console.log(jsonMsg.extra[0].text.substring(0, 2) === String(cnt) + '.', jsonMsg.extra[0].text.substring(0, 1), String(cnt) + '.');
             if (jsonMsg.extra[0].text.substring(0,5)=== '잔고 순위') {
               balanceTop.time = await jsonMsg.extra[0].text.replace('잔고 순위 ', '');
             }
