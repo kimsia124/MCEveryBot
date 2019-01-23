@@ -85,8 +85,6 @@ client.on('message', async (msg) => {
                     name: jsonMsg.extra[0].text.split(' ')[1],
                     price: jsonMsg.extra[0].text.split(' ')[2],
                   });
-
-                  cnt += 1;
                   break;
                 case 4:
                   await balanceTop.ranking.push({
@@ -94,8 +92,6 @@ client.on('message', async (msg) => {
                     name: jsonMsg.extra[2].text,
                     price: jsonMsg.extra[3].text.replace(', ', ''),
                   });
-
-                  cnt += 1;
                   break;
                 case 6:
                 await balanceTop.ranking.push({
@@ -103,25 +99,18 @@ client.on('message', async (msg) => {
                     name: jsonMsg.extra[4].text,
                     price: jsonMsg.extra[5].text.replace(', ', ''),
                   });
-
-                  cnt += 1;
                   break;
               }
             }
             else if (jsonMsg.extra[0].text === '/balancetop 2 ') {
-              let balanceMsg = `\
-  에브리팜 돈 순위 ${balanceTop.time}\
-  서버 총 합계: ${balanceTop.totalMoney}\
-  \`\`\``;
+              let balanceMsg = `에브리팜 돈 순위 ${balanceTop.time}\n서버 총 합계: ${balanceTop.totalMoney}\n\`\`\``;
               
               await balanceTop.ranking.forEach((rank) => {
-                balanceMsg += `\
-${rank.num}. ${rank.name} - ${rank.price}`;
+                balanceMsg += `\n${rank.num}. ${rank.name} - ${rank.price}`;
                 console.log(balanceMsg);
               });
 
-              balanceMsg += '\
-```';
+              balanceMsg += '\n```';
               await mcClient.removeAllListeners('chat');
               await msg.channel.send(balanceMsg);
             }
