@@ -72,6 +72,7 @@ client.on('message', async (msg) => {
             const jsonMsg = await JSON.parse(packet.message);
 
             console.log(jsonMsg);
+            console.log(jsonMsg.extra[0].text.substring(0, 1) === String(cnt) + '.');
             if (jsonMsg.extra[0].text.substring(0,5)=== '잔고 순위') {
               balanceTop.time = await jsonMsg.extra[0].text.replace('잔고 순위 ', '');
             }
@@ -116,11 +117,13 @@ client.on('message', async (msg) => {
   \`\`\``;
               
               await balanceTop.ranking.forEach((rank) => {
-                balanceMsg += `${rank.num}. ${rank.name} - ${rank.price}`;
+                balanceMsg += `\
+${rank.num}. ${rank.name} - ${rank.price}`;
                 console.log(balanceMsg);
               });
 
-              balanceMsg += '```';
+              balanceMsg += '\
+```';
               await mcClient.removeAllListeners('chat');
               await msg.channel.send(balanceMsg);
             }
