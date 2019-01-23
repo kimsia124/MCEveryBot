@@ -49,7 +49,8 @@ client.on('message', async (msg) => {
        await mcClient.on('window_items', (packet) => {
         packet.items.forEach((item) => {
           if (item.blockId !== -1) {
-            console.log(item.nbtData.value.display.value.Name.value.replace('§a§l[EveryFarm] §7섬주인: §6§n', ''));
+            console.log(item.nbtData.value.display.value.Name.value.replace('§a§l[EveryFarm] §7섬주인: §6§n', '').replace('§r§7', ''));
+            console.log(item.nbtData.value.display.value.Lore.value.value[0].replace('§e§a§l[EveryFarm] §7', ''));
           }
         });
       })
