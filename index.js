@@ -59,83 +59,82 @@ client.on('message', async (msg) => {
        await  mcClient.write('chat', { message: `/섬 순위`});
       }
     }
-  }
+    else if (splitMsg[1] === '돈') {
+      if (splitMsg[2] === '순위') {
+        if (splitMsg.length === 3) {
+          mcClient.write('chat', { message: '/돈 순위' });
+          let balanceTop = {};
+          balanceTop.ranking  = new Array;
+          mcClient.on('chat', async (packet) => {
+            if (!packet.message) return;
 
-  else if (splitMsg[1] === '돈') {
-    if (splitMsg[2] === '순위') {
-      if (splitMsg.length === 3) {
-        mcClient.write('chat', { message: '/돈 순위' });
-        let balanceTop = {};
-        balanceTop.ranking  = new Array;
-        mcClient.on('chat', async (packet) => {
-          if (!packet.message) return;
+            const jsonMsg = await JSON.parse(packet.message);
+            let cnt = 1;
 
-          const jsonMsg = await JSON.parse(packet.message);
-          let cnt = 1;
-
-          console.log(jsonMsg);
-          if (jsonMsg.extra[0].text.substring(0,5)=== '잔고 순위') {
-            balanceTop.time = await jsonMsg.extra[0].text.replace('잔고 순위 ', '');
-            msg.reply(jsonMsg.extra[0].text.replace('잔고 순위 ', ''), jsonMsg.extra[0].text);
-          }
-          else if (jsonMsg.extra[0].text === '서버 총 합계:') {
-            balanceTop.totalMoney = jsonMsg.extra[1].text;
-
-          }
-          else if (jsonMsg.extra[0].text.substring(0, 1) === String(cnt) + '.') {
-            switch (jsonMsg.extra.length) {
-              case 1:
-                await balanceTop.ranking.push({ 
-                  num: cnt,
-                  name: jsonMsg.extra[0].text.split(' ')[1],
-                  price: jsonMsg.extra[0].text.split(' ')[2],
-                });
-
-                cnt += 1;
-                break;
-              case 4:
-                await balanceTop.ranking.push({
-                  num: cnt,
-                  name: jsonMsg.extra[2].text,
-                  price: jsonMsg.extra[3].text.replace(', ', ''),
-                });
-
-                cnt += 1;
-                break;
-              case 6:
-              await balanceTop.ranking.push({
-                  num: cnt,
-                  name: jsonMsg.extra[4].text,
-                  price: jsonMsg.extra[5].text.replace(', ', ''),
-                });
-
-                cnt += 1;
-                break;
+            console.log(jsonMsg);
+            if (jsonMsg.extra[0].text.substring(0,5)=== '잔고 순위') {
+              balanceTop.time = await jsonMsg.extra[0].text.replace('잔고 순위 ', '');
+              msg.reply(jsonMsg.extra[0].text.replace('잔고 순위 ', ''), jsonMsg.extra[0].text);
             }
-          }
-          else if (jsonMsg.extra[0].text === '/balancetop 2 ') {
-            let balanceMsg = `\
-에브리팜 돈 순위 ${balanceTop.time}\
-서버 총 합계: ${balanceTop.totalMoney}\
-\`\`\``;
+            else if (jsonMsg.extra[0].text === '서버 총 합계:') {
+              balanceTop.totalMoney = jsonMsg.extra[1].text;
+
+            }
+            else if (jsonMsg.extra[0].text.substring(0, 1) === String(cnt) + '.') {
+              switch (jsonMsg.extra.length) {
+                case 1:
+                  await balanceTop.ranking.push({ 
+                    num: cnt,
+                    name: jsonMsg.extra[0].text.split(' ')[1],
+                    price: jsonMsg.extra[0].text.split(' ')[2],
+                  });
+
+                  cnt += 1;
+                  break;
+                case 4:
+                  await balanceTop.ranking.push({
+                    num: cnt,
+                    name: jsonMsg.extra[2].text,
+                    price: jsonMsg.extra[3].text.replace(', ', ''),
+                  });
+
+                  cnt += 1;
+                  break;
+                case 6:
+                await balanceTop.ranking.push({
+                    num: cnt,
+                    name: jsonMsg.extra[4].text,
+                    price: jsonMsg.extra[5].text.replace(', ', ''),
+                  });
+
+                  cnt += 1;
+                  break;
+              }
+            }
+            else if (jsonMsg.extra[0].text === '/balancetop 2 ') {
+              let balanceMsg = `\
+  에브리팜 돈 순위 ${balanceTop.time}\
+  서버 총 합계: ${balanceTop.totalMoney}\
+  \`\`\``;
+              
+              await balanceTop.ranking.forEach((rank) => {
+                balanceMsg += `${rank.num}. ${rank.name} - ${rank.price}`;
+              });
+
+              balanceMsg += '```';
+              await mcClient.removeAllListeners('chat');
+              await msg.reply(balanceMsg);
+            }
+          });
+        }
+        else if (splitMsg.length === 4) {
+          const num = parseInt(splitMsg[3]);
+
+          for(let cnt = 0; cnt > num % 8 +1; cnt++) {
             
-            await balanceTop.ranking.forEach((rank) => {
-              balanceMsg += `${rank.num}. ${rank.name} - ${rank.price}`;
-            });
-
-            balanceMsg += '```';
-            await mcClient.removeAllListeners('chat');
-            await msg.reply(balanceMsg);
           }
-        });
-      }
-      else if (splitMsg.length === 4) {
-        const num = parseInt(splitMsg[3]);
-
-        for(let cnt = 0; cnt > num % 8 +1; cnt++) {
           
         }
-        
       }
     }
   }
