@@ -96,7 +96,7 @@ client.on('message', async (msg) => {
                 case 1:
                   await balanceTop.ranking.push({ 
                     num: jsonMsg.extra[0].text.substring(0, 1),
-                    name: jsonMsg.extra[0].text.split(' ')[1].replace(',', ''),
+                    name: jsonMsg.extra[0].text.split(' ')[1].replace(/,/g, ''),
                     price: jsonMsg.extra[0].text.split(' ')[2],
                   });
                   break;
