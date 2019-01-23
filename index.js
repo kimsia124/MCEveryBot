@@ -10,13 +10,12 @@ const mcClient = mc.createClient({
 });
 
 mcClient.on('open_window', (packet) => {
-  const jsonMsg = JSON.parse(packet.windowId);
-  console.log(jsonMsg);
+  console.log('windowIds', packet.windowId);
 })
 
 mcClient.on('window_items', (packet) => {
-  const jsonMsg = JSON.parse(packet.items);
-  console.log(jsonMsg);
+  console.log('items', packet.windowId);
+  console.log(String(packet.items));
 })
 
 client.login("NTM2OTMzOTI2Mzg4NjI5NTMx.Dyd6-w.v3Df1OWFe0_g5odd7BbW8JEk-as");
