@@ -36,11 +36,10 @@ client.on('message', async (msg) => {
           const splitText = await jsonMsg.extra[1].text.split(' ');
 
           if (splitText[1] === '레벨:') {
-            await msg.reply(`${splitMsg[3]}님의 섬 레벨: ${splitText[2]}`);
+            await msg.channel.send(`${splitMsg[3]}님의 섬 레벨: ${splitText[2]}`);
             mcClient.removeAllListeners('chat');
           }
         });
-        await msg.reply('??');
       };
 
       if (splitMsg[2] === '순위') {
@@ -97,7 +96,7 @@ client.on('message', async (msg) => {
                 case 1:
                   await balanceTop.ranking.push({ 
                     num: jsonMsg.extra[0].text.substring(0, 1),
-                    name: jsonMsg.extra[0].text.split(' ')[1],
+                    name: jsonMsg.extra[0].text.split(' ')[1].replace(',', ''),
                     price: jsonMsg.extra[0].text.split(' ')[2],
                   });
                   break;
@@ -134,7 +133,7 @@ client.on('message', async (msg) => {
         else if (splitMsg.length === 4) {
           const num = parseInt(splitMsg[3]);
 
-          for(let cnt = 0; cnt > num % 8 +1; cnt++) {
+          for(let cnt = 0; cnt > num % 8 + 1; cnt++) {
             
           }
           
