@@ -52,7 +52,7 @@ client.on('message', async (msg) => {
         await packet.items.forEach(async (item) => {
           if (item.blockId !== -1) {
             await isTop.push({
-              name: item.nbtData.value.display.value.Name.value.split(' ')[2].replace(/§([a-z0-9])/, ''),
+              name: item.nbtData.value.display.value.Name.value.split(' ')[2].replace(/§([a-z0-9])/g, ''),
               level: item.nbtData.value.display.value.Lore.value.value[0].split(' ')[3],
             });
           }
