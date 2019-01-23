@@ -49,7 +49,7 @@ client.on('message', async (msg) => {
        let cnt = 1;
 
        await mcClient.on('window_items', async (packet) => {
-        await packet.items.forEach((item) => {
+        await packet.items.forEach(async (item) => {
           if (item.blockId !== -1) {
             await isTop.push({
               name: item.nbtData.value.display.value.Name.value.split(' ')[2],
