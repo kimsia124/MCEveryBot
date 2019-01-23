@@ -65,11 +65,11 @@ client.on('message', async (msg) => {
           mcClient.write('chat', { message: '/돈 순위' });
           let balanceTop = {};
           balanceTop.ranking  = new Array;
+          let cnt = 1;
           mcClient.on('chat', async (packet) => {
             if (!packet.message) return;
 
             const jsonMsg = await JSON.parse(packet.message);
-            let cnt = 1;
 
             console.log(jsonMsg);
             if (jsonMsg.extra[0].text.substring(0,5)=== '잔고 순위') {
