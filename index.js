@@ -45,12 +45,29 @@ client.on('message', async (msg) => {
 
       if (splitMsg[2] === '순위') {
        await  mcClient.write('chat', { message: `/섬 순위`});
+       let isTop = [];
+       let cnt = 1;
 
        await mcClient.on('window_items', (packet) => {
         packet.items.forEach((item) => {
           if (item.blockId !== -1) {
-            console.log(item.nbtData.value.display.value.Name.value.replace('§a§l[EveryFarm] §7섬주인: §6§n', '').replace('§r§7', ''));
-            console.log(item.nbtData.value.display.value.Lore.value.value[0].replace('§e§a§l[EveryFarm] §7', ''));
+            isTop.push({
+              name: item.nbtData.value.display.value.Name.value.split(' ')[2],
+              level: item.nbtData.value.display.value.Lore.value.value[0].split(' ')[3],
+            });
+          }
+
+          if (isTop.length === 10) {
+            let isMsg = `에브리팜 섬 순위\n\`\`\``;
+
+            await isTop.forEach((is) => {
+              isMsg += `\n${cnt}. ${is.name}의 섬 - 섬 레벨 : ${is.level}`;
+              cnt += 1;
+            });
+
+            balanceMsg += '\n```';
+            await mcClient.removeAllListeners('window_items');
+            await msg.channel.send(isMsg);
           }
         });
       })
