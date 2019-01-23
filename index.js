@@ -65,7 +65,7 @@ client.on('message', async (msg) => {
               cnt += 1;
             });
 
-            isMsgMsg += '\n```';
+            isMsg += '\n```';
             await mcClient.removeAllListeners('window_items');
             await msg.channel.send(isMsg);
           }
