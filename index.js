@@ -74,11 +74,9 @@ client.on('message', async (msg) => {
             console.log(jsonMsg);
             if (jsonMsg.extra[0].text.substring(0,5)=== '잔고 순위') {
               balanceTop.time = await jsonMsg.extra[0].text.replace('잔고 순위 ', '');
-              msg.reply(jsonMsg.extra[0].text.replace('잔고 순위 ', ''), jsonMsg.extra[0].text);
             }
             else if (jsonMsg.extra[0].text === '서버 총 합계:') {
               balanceTop.totalMoney = jsonMsg.extra[1].text;
-
             }
             else if (jsonMsg.extra[0].text.substring(0, 1) === String(cnt) + '.') {
               switch (jsonMsg.extra.length) {
@@ -119,11 +117,12 @@ client.on('message', async (msg) => {
               
               await balanceTop.ranking.forEach((rank) => {
                 balanceMsg += `${rank.num}. ${rank.name} - ${rank.price}`;
+                console.log(balanceMsg);
               });
 
               balanceMsg += '```';
               await mcClient.removeAllListeners('chat');
-              await msg.reply(balanceMsg);
+              await msg.channel.send(balanceMsg);
             }
           });
         }
