@@ -72,14 +72,14 @@ client.on('message', async (msg) => {
             const jsonMsg = await JSON.parse(packet.message);
 
             console.log(jsonMsg);
-            console.log(jsonMsg.extra[0].text.substring(0, 2) === String(cnt) + '.', jsonMsg.extra[0].text.substring(0, 1), String(cnt) + '.');
+            console.log(jsonMsg.extra[0].text.substring(0, 3) === String(cnt) + '.', jsonMsg.extra[0].text.substring(0, 1), String(cnt) + '.');
             if (jsonMsg.extra[0].text.substring(0,5)=== '잔고 순위') {
               balanceTop.time = await jsonMsg.extra[0].text.replace('잔고 순위 ', '');
             }
             else if (jsonMsg.extra[0].text === '서버 총 합계:') {
               balanceTop.totalMoney = jsonMsg.extra[1].text;
             }
-            else if (jsonMsg.extra[0].text.substring(0, 1) === String(cnt) + '.') {
+            else if (jsonMsg.extra[0].text.substring(0, 3) === String(cnt) + '.') {
               switch (jsonMsg.extra.length) {
                 case 1:
                   await balanceTop.ranking.push({ 
