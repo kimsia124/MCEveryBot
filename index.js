@@ -47,7 +47,11 @@ client.on('message', async (msg) => {
        await  mcClient.write('chat', { message: `/섬 순위`});
 
        await mcClient.on('window_items', (packet) => {
-        console.log(packet.items);
+        packet.items.forEach((item) => {
+          if (item.blockId !== -1) {
+            console.log(item.nbtData.value);
+          }
+        });
       })
       }
     }
