@@ -52,24 +52,27 @@ client.on('message', async (msg) => {
         await packet.items.forEach(async (item) => {
           if (item.blockId !== -1) {
             await isTop.push({
-              name: item.nbtData.value.display.value.Name.value.split(' ')[2],
+              name: item.nbtData.value.display.value.Name.value.split(' ')[2].replace(/§([a-z0-9])/, ''),
               level: item.nbtData.value.display.value.Lore.value.value[0].split(' ')[3],
             });
           }
+
+          if (isTop.length === 10) {
+            let isMsg = `에브리팜 섬 순위\n\`\`\``;
+    
+            await isTop.forEach((is) => {
+              isMsg += `\n${cnt}. ${is.name}의 섬 - 섬 레벨 : ${is.level}`;
+              cnt += 1;
+            });
+    
+            isMsg += '\n```';
+            await mcClient.removeAllListeners('window_items');
+            await msg.channel.send(isMsg);
+
+            return;
+          };
         });
       });
-      if (isTop.length === 10) {
-        let isMsg = `에브리팜 섬 순위\n\`\`\``;
-
-        await isTop.forEach((is) => {
-          isMsg += `\n${cnt}. ${is.name}의 섬 - 섬 레벨 : ${is.level}`;
-          cnt += 1;
-        });
-
-        isMsg += '\n```';
-        await mcClient.removeAllListeners('window_items');
-        await msg.channel.send(isMsg);
-      };
       }
     }
     else if (splitMsg[1] === '돈') {
