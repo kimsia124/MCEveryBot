@@ -15,7 +15,7 @@ mcClient.on('open_window', (packet) => {
 
 mcClient.on('window_items', (packet) => {
   console.log('items', packet.windowId);
-  console.log(String(packet.items));
+  console.log(JSON.stringify(packet.items));
 })
 
 client.login("NTM2OTMzOTI2Mzg4NjI5NTMx.Dyd6-w.v3Df1OWFe0_g5odd7BbW8JEk-as");
