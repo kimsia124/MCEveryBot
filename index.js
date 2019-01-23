@@ -65,25 +65,23 @@ client.on('message', async (msg) => {
           mcClient.write('chat', { message: '/돈 순위' });
           let balanceTop = {};
           balanceTop.ranking  = new Array;
-          let cnt = 1;
           mcClient.on('chat', async (packet) => {
             if (!packet.message) return;
 
             const jsonMsg = await JSON.parse(packet.message);
 
             console.log(jsonMsg);
-            console.log(jsonMsg.extra[0].text.substring(0, 2) === String(cnt) + '.', jsonMsg.extra[0].text.substring(0, 2), String(cnt) + '.', cnt);
             if (jsonMsg.extra[0].text.substring(0,5)=== '잔고 순위') {
               balanceTop.time = await jsonMsg.extra[0].text.replace('잔고 순위 ', '');
             }
             else if (jsonMsg.extra[0].text === '서버 총 합계:') {
               balanceTop.totalMoney = jsonMsg.extra[1].text;
             }
-            else if (jsonMsg.extra[0].text.substring(0, 2) === String(cnt) + '.') {
+            else if (jsonMsg.extra[0].text.substring(1, 2) === '.') {
               switch (jsonMsg.extra.length) {
                 case 1:
                   await balanceTop.ranking.push({ 
-                    num: cnt,
+                    num: jsonMsg.extra[0].text.substring(0, 1),
                     name: jsonMsg.extra[0].text.split(' ')[1],
                     price: jsonMsg.extra[0].text.split(' ')[2],
                   });
@@ -92,7 +90,7 @@ client.on('message', async (msg) => {
                   break;
                 case 4:
                   await balanceTop.ranking.push({
-                    num: cnt,
+                    num: jsonMsg.extra[0].text.substring(0, 1),
                     name: jsonMsg.extra[2].text,
                     price: jsonMsg.extra[3].text.replace(', ', ''),
                   });
@@ -101,7 +99,7 @@ client.on('message', async (msg) => {
                   break;
                 case 6:
                 await balanceTop.ranking.push({
-                    num: cnt,
+                    num: jsonMsg.extra[0].text.substring(0, 1),
                     name: jsonMsg.extra[4].text,
                     price: jsonMsg.extra[5].text.replace(', ', ''),
                   });
