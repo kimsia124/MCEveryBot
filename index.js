@@ -48,10 +48,10 @@ client.on('message', async (msg) => {
        let isTop = [];
        let cnt = 1;
 
-       await mcClient.on('window_items', (packet) => {
-        packet.items.forEach((item) => {
+       await mcClient.on('window_items', async (packet) => {
+        await packet.items.forEach((item) => {
           if (item.blockId !== -1) {
-            isTop.push({
+            await isTop.push({
               name: item.nbtData.value.display.value.Name.value.split(' ')[2],
               level: item.nbtData.value.display.value.Lore.value.value[0].split(' ')[3],
             });
