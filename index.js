@@ -39,6 +39,10 @@ client.on('message', async (msg) => {
             await msg.channel.send(`${splitMsg[3]}님의 섬 레벨: ${splitText[2]}`);
             mcClient.removeAllListeners('chat');
           }
+          else if(splitText[1] === '유저는') {
+            await msg.channel.send('그 유저는 섬을 가지고 있지 않습니다.');
+            mcClient.removeAllListeners('chat');
+          }
         });
       };
 
