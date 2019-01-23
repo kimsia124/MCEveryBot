@@ -9,15 +9,6 @@ const mcClient = mc.createClient({
   version: '1.12.2',
 });
 
-mcClient.on('open_window', (packet) => {
-  console.log('windowIds', packet.windowId);
-})
-
-mcClient.on('window_items', (packet) => {
-  console.log('items', packet.windowId);
-  console.log(JSON.stringify(packet.items));
-})
-
 client.login("NTM2OTMzOTI2Mzg4NjI5NTMx.Dyd6-w.v3Df1OWFe0_g5odd7BbW8JEk-as");
 
 client.on('ready', () => {
@@ -54,6 +45,11 @@ client.on('message', async (msg) => {
 
       if (splitMsg[2] === '순위') {
        await  mcClient.write('chat', { message: `/섬 순위`});
+
+       await mcClient.on('window_items', (packet) => {
+        const jsonItems = JSON.parse(packet.items);
+        console.log(jsonItems);
+      })
       }
     }
     else if (splitMsg[1] === '돈') {
