@@ -9,17 +9,15 @@ const mcClient = mc.createClient({
   version: '1.12.2',
 });
 
-/*
 mcClient.on('open_window', (packet) => {
-  //const jsonMsg = JSON.parse(packet.i);
-  console.log(packet);
+  const jsonMsg = JSON.parse(packet.windowId);
+  console.log(jsonMsg);
 })
 
 mcClient.on('window_items', (packet) => {
-  // const jsonMsg = JSON.parse(packet);
-  console.log(packet);
+  const jsonMsg = JSON.parse(packet.items);
+  console.log(jsonMsg);
 })
-*/
 
 client.login("NTM2OTMzOTI2Mzg4NjI5NTMx.Dyd6-w.v3Df1OWFe0_g5odd7BbW8JEk-as");
 
