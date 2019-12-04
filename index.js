@@ -5,7 +5,7 @@ const mc = require('minecraft-protocol');
 const mcClient = mc.createClient({
   host: 'everyF.kr',
   username: 'whddlqn@naver.com',
-  password: 'sia740822',
+  password: 'password',
   version: '1.12.2',
 });
 
